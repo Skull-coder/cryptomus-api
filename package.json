@@ -1,7 +1,7 @@
 {
 	"name": "cryptomus-api",
 	"version": "1.0.0",
-	"description": "Библиотека для работы с платежной системой Lava",
+	"description": "Библиотека для работы с платежной системой Cryptomus",
 	"main": "./dist/index.js",
 	"module": "./dist/index.js",
 	"directories": {
