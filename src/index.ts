@@ -18,7 +18,6 @@ export class CryptomusApi {
 			return data;
 		} catch (err) {
 			if (err instanceof AxiosError) {
-				console.error(err.response.data);
 				throw new Error(err.response.data);
 			}
 		}
