@@ -1,0 +1,48 @@
+{
+	"name": "cryptomus-api",
+	"version": "1.0.0",
+	"description": "Библиотека для работы с платежной системой Lava",
+	"main": "./dist/index.js",
+	"module": "./dist/index.js",
+	"directories": {
+		"lib": "lib"
+	},
+	"typings": "./dist/index.d.ts",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"build": "tsc"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/Skull-coder/cryptomus-api.git"
+	},
+	"keywords": [
+		"cryptomus",
+		"cryptomus-api",
+		"payment",
+		"cryptomus-pay"
+	],
+	"author": "Skull",
+	"license": "ISC",
+	"dependencies": {
+		"axios": "^1.3.5",
+		"crypto": "^1.0.1"
+	},
+	"devDependencies": {
+		"@types/node": "^18.15.11",
+		"@typescript-eslint/eslint-plugin": "5.56.0",
+		"@typescript-eslint/parser": "5.56.0",
+		"eslint": "8.36.0",
+		"eslint-config-airbnb-base": "15.0.0",
+		"eslint-config-prettier": "8.8.0",
+		"eslint-import-resolver-typescript": "3.5.3",
+		"eslint-plugin-import": "2.27.5",
+		"eslint-plugin-prettier": "4.2.1",
+		"prettier": "2.8.7",
+		"prettier-plugin-organize-imports": "3.2.2"
+	},
+	"bugs": {
+		"url": "https://github.com/Skull-coder/cryptomus-api/issues"
+	},
+	"homepage": "https://github.com/Skull-coder/cryptomus-api#readme"
+}
