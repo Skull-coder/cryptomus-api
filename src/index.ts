@@ -1,14 +1,5 @@
 import axios, { AxiosError } from 'axios';
-import {
-	API_URL,
-	GET_BALANCE,
-	PAYMENT_CREATE,
-	PAYMENT_HISTORY,
-	PAYMENT_INFO,
-	PAYMENT_RESEND,
-	PAYMENT_SERVICES,
-	WALLET_CREATE,
-} from './consts';
+import { API_URL, PAYMENT_REQUEST_URI } from './consts';
 import { Signature } from './signature';
 import { IPaymentCreate, IPaymentInfo, IWalletCreate } from './types';
 
@@ -19,11 +10,12 @@ export class CryptomusApi {
 		this.signature = new Signature(this.apiKey, this.merchantId);
 	}
 
-	async request<T>(method: string, payload?: T) {
+	private async request<T>(method: string, payload?: T) {
 		try {
 			const { data } = await axios.post(API_URL + method, payload, {
 				headers: this.signature.generateSignature(JSON.stringify(payload)),
 			});
+
 			return data;
 		} catch (err) {
 			if (err instanceof AxiosError) {
@@ -32,37 +24,39 @@ export class CryptomusApi {
 		}
 	}
 
-	async getServices() {
-		return this.request(PAYMENT_SERVICES);
+	public async getServices() {
+		return this.request(PAYMENT_REQUEST_URI.PAYMENT_SERVICES);
 	}
 
-	async createPayment(data: IPaymentCreate) {
-		return this.request<IPaymentCreate>(PAYMENT_CREATE, data);
+	public async createPayment(data: IPaymentCreate) {
+		return this.request<IPaymentCreate>(PAYMENT_REQUEST_URI.PAYMENT_CREATE, data);
 	}
 
-	async paymentInfo(data: IPaymentInfo) {
+	public async paymentInfo(data: IPaymentInfo) {
 		if (!data.uuid && !data.order_id) {
 			throw new Error('One of the parameters is required');
 		}
-		return this.request<IPaymentInfo>(PAYMENT_INFO, data);
+
+		return this.request<IPaymentInfo>(PAYMENT_REQUEST_URI.PAYMENT_INFO, data);
 	}
 
-	async paymentsHistory() {
-		return this.request(PAYMENT_HISTORY);
+	public async paymentsHistory() {
+		return this.request(PAYMENT_REQUEST_URI.PAYMENT_HISTORY);
 	}
 
-	async getBalance() {
-		return this.request(GET_BALANCE);
+	public async getBalance() {
+		return this.request(PAYMENT_REQUEST_URI.GET_BALANCE);
 	}
 
-	async reSendNotifications(data: IPaymentInfo) {
+	public async reSendNotifications(data: IPaymentInfo) {
 		if (!data.uuid && !data.order_id) {
 			throw new Error('One of the parameters is required');
 		}
-		return this.request<IPaymentInfo>(PAYMENT_RESEND, data);
+
+		return this.request<IPaymentInfo>(PAYMENT_REQUEST_URI.PAYMENT_RESEND, data);
 	}
 
-	async createWallet(data: IWalletCreate) {
-		return this.request<IWalletCreate>(WALLET_CREATE, data);
+	public async createWallet(data: IWalletCreate) {
+		return this.request<IWalletCreate>(PAYMENT_REQUEST_URI.WALLET_CREATE, data);
 	}
 }
