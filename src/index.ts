@@ -6,6 +6,12 @@ import { IPaymentCreate, IPaymentInfo, IWalletCreate } from './types';
 export class CryptomusApi {
 	private signature: Signature;
 
+	/**
+	 *
+	 * @param {string} apiKey API-ключ.
+	 * @param {string} merchantId Уникальный идеинтификатор магазина.
+	 *
+	 */
 	constructor(private apiKey: string, private merchantId: string) {
 		this.signature = new Signature(this.apiKey, this.merchantId);
 	}
@@ -28,10 +34,22 @@ export class CryptomusApi {
 		return this.request(PAYMENT_REQUEST_URI.PAYMENT_SERVICES);
 	}
 
+	/**
+	 * Создание платежа
+	 *
+	 * @param {IPaymentCreate} data [Данные для создания платежа](https://doc.cryptomus.com/payments/creating-invoice).
+	 *
+	 */
 	public async createPayment(data: IPaymentCreate) {
 		return this.request<IPaymentCreate>(PAYMENT_REQUEST_URI.PAYMENT_CREATE, data);
 	}
 
+	/**
+	 * Получение информации о платеже
+	 *
+	 * @param {IPaymentInfo} data [Данные для получения платежа](https://doc.cryptomus.com/payments/payment-information).
+	 *
+	 */
 	public async paymentInfo(data: IPaymentInfo) {
 		if (!data.uuid && !data.order_id) {
 			throw new Error('One of the parameters is required');
@@ -48,6 +66,12 @@ export class CryptomusApi {
 		return this.request(PAYMENT_REQUEST_URI.GET_BALANCE);
 	}
 
+	/**
+	 * Повторно отправить webhook
+	 *
+	 * @param {IPaymentInfo} data [Данные для повторной отправки веб-хука](https://doc.cryptomus.com/payments/resend-webhook).
+	 *
+	 */
 	public async reSendNotifications(data: IPaymentInfo) {
 		if (!data.uuid && !data.order_id) {
 			throw new Error('One of the parameters is required');
@@ -56,6 +80,12 @@ export class CryptomusApi {
 		return this.request<IPaymentInfo>(PAYMENT_REQUEST_URI.PAYMENT_RESEND, data);
 	}
 
+	/**
+	 * Создание статического кошелька
+	 *
+	 * @param {IWalletCreate} data [Данные для создания статического кошелька](https://doc.cryptomus.com/payments/creating-static).
+	 *
+	 */
 	public async createWallet(data: IWalletCreate) {
 		return this.request<IWalletCreate>(PAYMENT_REQUEST_URI.WALLET_CREATE, data);
 	}
